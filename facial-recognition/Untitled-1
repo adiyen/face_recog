@@ -1,0 +1,28 @@
+[W 180819 14:11:06 web:2063] 404 GET /tools/phpMyAdmin/index.php (193.112.93.148) 0.41ms
+[W 180819 14:11:09 web:2063] 404 GET /phpmyadmin-old/index.php (193.112.93.148) 0.41ms
+[W 180819 14:11:10 web:2063] 404 GET /phpMyAdminold/index.php (193.112.93.148) 0.41ms
+[W 180819 14:11:10 web:2063] 404 GET /phpMyAdmin.old/index.php (193.112.93.148) 0.38ms
+[W 180819 14:11:11 web:2063] 404 GET /pma-old/index.php (193.112.93.148) 0.38ms
+[W 180819 14:11:11 web:2063] 404 GET /claroline/phpMyAdmin/index.php (193.112.93.148) 0.38ms
+[W 180819 14:11:11 web:2063] 404 GET /typo3/phpmyadmin/index.php (193.112.93.148) 0.37ms
+[W 180819 14:11:11 web:2063] 404 GET /phpma/index.php (193.112.93.148) 0.40ms
+[W 180819 14:11:11 web:2063] 404 GET /phpmyadmin/phpmyadmin/index.php (193.112.93.148) 0.38ms
+[W 180819 14:11:12 web:2063] 404 GET /phpMyAdmin/phpMyAdmin/index.php (193.112.93.148) 0.37ms
+
+
+def load_keras_model(weights_path, params, **kwargs):
+    """Return the keras model with the given weight"""
+    from keras.models import load_model
+
+    return {
+        "model": load_model(weights_path),
+        "params": {
+            "image_w": params["image_w"],
+            "image_h": params["image_h"]
+        }
+    }
+
+curl -H "Content-Type: application/json"     -X POST -d '{"AUTH_KEY": "lilyapp@2017",
+                "image_url": "http://www.hawkshop.com/webitemimages/103/CW1702-t.jpg",
+                "text": "dark floral tops"}'
+                 http://34.217.136.121/api/v1/search/predict

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="stuff, to, help, search, engines, not" name="keywords">
+<meta content="What this page is about." name="description">
+<meta content="Display Webcam Stream" name="title">
+<title>Display Webcam Stream</title>
+  
+<style>
+#container {
+    margin: 0px auto;
+    width: 500px;
+    height: 375px;
+    border: 10px #333 solid;
+}
+#videoElement {
+    width: 500px;
+    height: 375px;
+    background-color: #666;
+}
+</style>
+</head>
+  
+<body>
+<div id="container">
+    <h1>Take a snapshot of the current video stream</h1> Click on the Start WebCam button.
+    <p>
+      <button onclick="startWebcam();">Start WebCam</button>
+      <button type="submit" id="dl-btn" href="#" download="participant.jpeg" onclick="snapshot();">Take Snapshot</button>
+    </p>
+    <video id="videoElement" onclick="snapshot();" width=400 height=400 id="video" controls autoplay></video>
+    <form method=post enctype=multipart/form-data action="/upload">
+        <label>Name: </label>
+        <input type="text" name="user"/>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+    <br />
+    Screenshots :
+    <p><canvas id="myCanvas" width="500" height="375"></canvas></p>
+</div>
+<script>
+    var video = document.querySelector("#videoElement");
+    var webcamStream;
+    var canvas = document.getElementById("myCanvas");
+    var context = canvas.getContext('2d');
+
+    function startWebcam() {
+        if (navigator.mediaDevices.getUserMedia) {       
+            navigator.mediaDevices.getUserMedia({video: true})
+        .then(function(stream) {
+            video.srcObject = stream;
+        })
+        .catch(function(err0r) {
+            console.log("Something went wrong!");
+        });
+        }
+    }
+
+    function snapshot() {
+    // Draws current image from the video element into the canvas
+    // console.log(webcamStream);
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    // webcamStream.getTracks().forEach(function(track) {
+    //     track.stop();
+    // });
+    var dataURL = canvas.toDataURL('image/jpeg', 1.0);
+    document.querySelector('#dl-btn').href = dataURL;
+
+    console.log(dataURL)
+
+    }
+</script>
+</body>
+</html>
